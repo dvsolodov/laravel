@@ -14,5 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'Это домашняя страница';
 });
+
+Route::get('/home', function () {
+    return 'Это домашняя страница';
+});
+
+Route::get('/about', function () {
+    return 'Это страница с информацией о нас';
+});
+
+Route::get('/news', function () {
+    return 'Это страница с новостями';
+});
+
