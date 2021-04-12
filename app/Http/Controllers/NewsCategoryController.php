@@ -3,29 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\NewsCategory;
 
 class NewsCategoryController extends Controller
 {
     public function index()
     {
-        $newsCategory = [
-            'в мире' => 'world',
-            'экономика' => 'business',
-            'общество' => 'society',
-            'коронавирус' => 'koronavirus',
-            'культура' => 'culture',
-            'технологии' => 'computers',
-            'наука' => 'science',
+        $data = [
+            'pageTitle' => 'Каталог новостей', 
+            'newsCategory' => (new NewsCategory())->getAll(),
+            'activePage' => 'Каталог новостей',
         ];
 
-        return view(
-            'newsCatalog', 
-            [
-                'pageTitle' => 'Каталог новостей', 
-                'newsCategory' => $newsCategory,
-                'activePage' => 'Каталог новостей',
-            ]
-        );
+        return view('newsCatalog', $data);
     }
 }
 

@@ -8,6 +8,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home', ['pageTitle' => 'Главная страница', 'activePage' => 'Главная']);
+        $data = [
+            'pageTitle' => 'Главная страница', 
+            'activePage' => 'Главная',
+        ];
+
+        return view('home', $data);
     }
 }

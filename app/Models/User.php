@@ -40,4 +40,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    private $admin = [
+        'login' => 'admin',
+        'password' => '123',
+    ];
+
+    public function getOneByLogin(string $login = null): ?array
+    {
+        if ($this->admin['login'] == $login) {
+            return $this->admin;
+        }
+
+        return null;
+    }
 }
+
