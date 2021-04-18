@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,20 @@ Route::get('/category/{category}', [NewsController::class, 'categoryNews'])
 
 Route::get('/category/{category}/news/{news}', [NewsController::class, 'newsCard'])
     ->name('news::card');
+
+Route::group(
+    [
+        'prefix' => '/feedback',
+        'as' => 'feedback::',
+    ], 
+    function () {
+        Route::get('/', [FeedbackController::class, 'show'])
+            ->name('show');
+
+        Route::post('/', [FeedbackController::class, 'createFeedback'])
+            ->name('create');
+    }
+);
 
 Route::group(
     [
