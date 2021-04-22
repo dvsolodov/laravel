@@ -12,6 +12,7 @@ class Menu extends Model
     private $menu = [
         'Главная' => '/',
         'Каталог новостей' => '/news_catalog',
+        'Обратная связь' => '/feedback',
     ];
 
     public function getAll()
