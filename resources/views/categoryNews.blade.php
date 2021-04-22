@@ -4,15 +4,20 @@
 
 @section('content')
 
+@if (!isset($news['news'][0]))
+    <p>В данной категории новостей нет</p>
+@else
+
     @foreach ($news['news'] as $item)
         <section>
-            <h3>{{ $item['title'] }}</h3>
-            <p>{{ $item['desc'] }}</p>
-            <a href="{{ route('news::card', [$item['category'], $item['slug']]) }}">
+            <h3>{{ $item->title }}</h3>
+            <p>{{ $item->text }}</p>
+            <a href="{{ route('news::card', [$item->category, $item->slug]) }}">
                 Читать
             </a>
         </section>
     @endforeach
 
+@endif
 @endsection
 
