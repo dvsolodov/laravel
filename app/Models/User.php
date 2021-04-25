@@ -41,15 +41,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    private $admin = [
-        'login' => 'admin',
-        'password' => '123',
-    ];
-
-    public function getOneByLogin(string $login = null): ?array
+    public function getOneByLogin(string $login = null): ?object
     {
-        if ($this->admin['login'] == $login) {
-            return $this->admin;
+        $user = self::where('name', $login)->first();
+
+        if ($user) {
+            return $user;
         }
 
         return null;

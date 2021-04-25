@@ -4,8 +4,8 @@
 
 @section('content')
 
-    <a href="{{ route('news::fromCategory', $fullNews->catSlug) }}">
-        Назад в категорию "{{ $fullNews->category }}"
+    <a href="{{ route('news::fromCategory', $fullNews->category()->first()->slug) }}">
+        Назад в категорию "{{ $fullNews->category()->first()->name }}"
     </a>
 
     <section>

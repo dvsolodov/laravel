@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\NewsCategory;
+use App\Models\Category;
+
 
 class NewsCategoryController extends Controller
 {
@@ -11,10 +12,10 @@ class NewsCategoryController extends Controller
     {
         $data = [
             'pageTitle' => 'Каталог новостей', 
-            'newsCategory' => (new NewsCategory())->getAll(),
+            'newsCategory' => (new Category())->all(),
             'activePage' => 'Каталог новостей',
         ];
-
+        
         return view('newsCatalog', $data);
     }
 }

@@ -23,19 +23,12 @@ class AuthController extends Controller
         $user = (new User())->getOneByLogin($request->login);
 
         if (isset($user)
-            && $request->login == $user['login'] 
-            && $request->password == $user['password']
+            && $request->login == $user->name 
+            && password_verify($request->password, $user->password)
         ) {
-            return view(
-                'admin/panel', 
-                [
-                    'login' => $user['login'],
-                    'pageTitle' => 'Панель администратора',
-                ]
-            );
+            return redirect()->route('admin::news::index');
         } else {
-            header('Location: ' . route('admin::auth::form'));
-            exit();
+            return back()->withInput();
         }
     }
 }
