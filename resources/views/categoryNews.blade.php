@@ -12,7 +12,7 @@
         <section>
             <h3>{{ $item->title }}</h3>
             <p>{{ $item->text }}</p>
-            <a href="{{ route('news::card', [$item->category, $item->slug]) }}">
+            <a href="{{ route('news::card', [$item->category()->first()->slug, $item->slug]) }}">
                 Читать
             </a>
         </section>

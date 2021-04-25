@@ -48,7 +48,7 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($newsCategories as $category) {
-            \DB::table('category')->insert($category);
+            \DB::table('categories')->insert($category);
         }
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\PanelController as AdminPanelController;
 use App\Http\Controllers\FeedbackController;
 
 /*
@@ -64,13 +65,17 @@ Route::group(
                 'as' => 'news::',
             ],
             function () {
-                Route::get('/', [AdminNewsController::class, 'index'] )
+                Route::get('/', [AdminPanelController::class, 'index'])
                     ->name('index');
-                Route::get('/create',[AdminNewsController::class, 'create'])
+                Route::get('/show/{id}', [AdminPanelController::class, 'show'])
+                    ->name('show');
+                Route::get('/create',[AdminPanelController::class, 'create'])
                     ->name('create');
-                Route::get('/update',[AdminNewsController::class, 'update'])
-                    ->name('update');
-                Route::get('/delete',[AdminNewsController::class, 'delete'])
+                Route::get('/edit/{id}',[AdminPanelController::class, 'showEditForm'])
+                    ->name('edit::form');
+                Route::post('/edit/{id}',[AdminPanelController::class, 'edit'])
+                    ->name('edit');
+                Route::get('/delete/{id}',[AdminPanelController::class, 'delete'])
                     ->name('delete');
             }
         );

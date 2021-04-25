@@ -5,10 +5,10 @@
 @section('content')
 
 <ul>
-    @foreach ($newsCategory as $category => $path)
+    @foreach ($newsCategory as $category => $item)
     <li>
-        <a href="{{ route('news::fromCategory', $path) }}">
-            {{ $category }}
+        <a href="{{ route('news::fromCategory', $item->slug) }}">
+            {{ $item->name }}
         </a>
     </li>
     @endforeach

@@ -12,7 +12,7 @@ class NewsController extends Controller
     {
         $newsFromCategory = (new News())->getAllFromCategory($category);
         $data = [
-            'pageTitle' => "Новости категории \"{$newsFromCategory['cat'][0]->name}\"", 
+            'pageTitle' => "Новости категории \"{$newsFromCategory['cat']}\"", 
             'news' => $newsFromCategory,
             'activePage' => 'Каталог новостей',
         ];
@@ -24,7 +24,7 @@ class NewsController extends Controller
     {
         $fullNews = (new News())->getOne($news);
         $data = [
-            'pageTitle' => "Новость из категории \"{$fullNews->category}\"", 
+            'pageTitle' => "Новость из категории \"{$fullNews->category()->first()->name}\"", 
             'fullNews' => $fullNews,
             'activePage' => 'Каталог новостей',
         ];

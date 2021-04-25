@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('pageTitle')</title>
+    <title>{{ $pageTitle }}</title>
 </head>
 <body>
     <main>
