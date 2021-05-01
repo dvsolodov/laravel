@@ -10,6 +10,14 @@ class News extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'text',
+        'category_id',
+        'source_id',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class); 

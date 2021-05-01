@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <a href="{{ route('admin::news::index') }}">
+    <a href="{{ route('admin::news::show::all') }}">
         Назад в панель
     </a>
 
