@@ -3,19 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\News;
+use App\Http\Requests\{
+    EditNewsRequest,
+    CreateNewsRequest,
+};
+use App\Models\{
+        News,
+        Category,
+        Source,
+};
 use App\Http\Controllers\Controller;
 
-class PanelController extends Controller
+class NewsController extends Controller
 {
-    public function index()
+    public function showAll()
     {
         $data = [
             'pageTitle' => 'Панель администратора', 
             'news' => News::orderBy('category_id')->get(),
         ];
 
-        return view('admin.panel', $data); 
+        return view('admin.allNews', $data); 
     }
 
     public function show(int $id)
@@ -26,7 +34,7 @@ class PanelController extends Controller
             'news' => $news,
         ];
 
-        return view('admin.news', $data); 
+        return view('admin.oneNews', $data); 
     }
 
     public function showEditForm($id)
@@ -37,22 +45,41 @@ class PanelController extends Controller
             'news' => $news,
         ];
 
-        return view('admin.editForm', $data); 
+        return view('admin.editNewsForm', $data); 
     }
 
-    public function edit(Request $request, $id)
+    public function edit(EditNewsRequest $request, $id)
     {
         $news = News::find($request->id);
         $news->title = $request->title;
         $news->slug = str_replace(' ', '_', $news->title);
         $news->description = $request->description;
         $news->text = $request->text;
-        $news->category_id = $request->category_id;
-        $news->source_id = $request->source_id;
-        $news->publish_date = $request->publish_date;
         $news->save();
 
         return back()->with('editMsg', 'Новость отредактирована')->withInput();
+    }
+
+    public function showCreateForm()
+    {
+        $data = [
+            'pageTitle' => __('newsCreateForm.pageTitle'), 
+            'categories' => (new Category())->all(),
+            'sources' => (new Source())->all(),
+        ];
+
+        return view('admin.createNewsForm', $data); 
+    }
+
+    public function create(CreateNewsRequest $request)
+    {
+        $news = new News();
+        $news->fill($request->all());
+        $news->slug = str_replace(' ', '_', $news->title);
+        $news->publish_date = date('Y-m-d H:i:s', time());
+        $news->save();
+
+        return back()->with('createMsg', __('newsCreateForm.newsIsCreated'));
     }
 
     public function delete($id)

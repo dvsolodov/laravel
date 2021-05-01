@@ -4,6 +4,8 @@
 
 @section('content')
 
+<p><a href="{{ route('admin::news::create::form') }}">Создать новость</a></p>
+<p><a href="{{ route('admin::category::show::all') }}">Категории</a></p>
 <table>
     <tr>
         <th>Заголовок</th>

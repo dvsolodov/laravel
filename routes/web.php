@@ -7,7 +7,6 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Admin\PanelController as AdminPanelController;
 use App\Http\Controllers\FeedbackController;
 
 /*
@@ -65,17 +64,19 @@ Route::group(
                 'as' => 'news::',
             ],
             function () {
-                Route::get('/', [AdminPanelController::class, 'index'])
-                    ->name('index');
-                Route::get('/show/{id}', [AdminPanelController::class, 'show'])
+                Route::get('/', [AdminNewsController::class, 'showAll'])
+                    ->name('show::all');
+                Route::get('/show/{id}', [AdminNewsController::class, 'show'])
                     ->name('show');
-                Route::get('/create',[AdminPanelController::class, 'create'])
+                Route::get('/create',[AdminNewsController::class, 'showCreateForm'])
+                    ->name('create::form');
+                Route::post('/create',[AdminNewsController::class, 'create'])
                     ->name('create');
-                Route::get('/edit/{id}',[AdminPanelController::class, 'showEditForm'])
+                Route::get('/edit/{id}',[AdminNewsController::class, 'showEditForm'])
                     ->name('edit::form');
-                Route::post('/edit/{id}',[AdminPanelController::class, 'edit'])
+                Route::post('/edit/{id}',[AdminNewsController::class, 'edit'])
                     ->name('edit');
-                Route::get('/delete/{id}',[AdminPanelController::class, 'delete'])
+                Route::get('/delete/{id}',[AdminNewsController::class, 'delete'])
                     ->name('delete');
             }
         );
@@ -86,13 +87,17 @@ Route::group(
                 'as' => 'category::',
             ],
             function () {
-                Route::get('/', [AdminCategoryController::class, 'index'] )
-                    ->name('index');
-                Route::get('/create',[AdminCategoryController::class, 'create'])
+                Route::get('/', [AdminCategoryController::class, 'showAll'] )
+                    ->name('show::all');
+                Route::get('/create',[AdminCategoryController::class, 'showCreateForm'])
+                    ->name('create::form');
+                Route::post('/create',[AdminCategoryController::class, 'create'])
                     ->name('create');
-                Route::get('/update',[AdminCategoryController::class, 'update'])
-                    ->name('update');
-                Route::get('/delete',[AdminCategoryController::class, 'delete'])
+                Route::get('/edit/{id}',[AdminCategoryController::class, 'showEditForm'])
+                    ->name('edit::form');
+                Route::post('/edit/{id}',[AdminCategoryController::class, 'edit'])
+                    ->name('edit');
+                Route::get('/delete/{id}',[AdminCategoryController::class, 'delete'])
                     ->name('delete');
             }
         );

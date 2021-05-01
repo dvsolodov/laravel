@@ -36,4 +36,5 @@ class NewsTest extends TestCase
         $response->assertViewHas('pageTitle', 'Новость из категории "В мире"');
 
     }
+
 }
