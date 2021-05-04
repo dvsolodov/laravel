@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Menu extends Model
 {
@@ -13,11 +14,29 @@ class Menu extends Model
         'Главная' => '/',
         'Каталог новостей' => '/news_catalog',
         'Обратная связь' => '/feedback',
+        'Регистрация' => '/register',
+        'Вход' => '/login',
+        'Профиль' => '/profile',
+        'Выйти' => '/logout',
     ];
 
-    public function getAll()
+    public function get()
     {
-        return $this->menu;
+        $userMenu = [];
+
+        foreach ($this->menu as $page => $link) {
+            if (Auth::check() && ($link == '/register' || $link == '/login')) {
+                continue;
+            }
+
+            if (!Auth::check() && ($link == '/profile' || $link == '/logout')) {
+                continue;
+            }
+
+            $userMenu[$page] = $link;
+        }
+
+        return $userMenu;
     }
 }
 

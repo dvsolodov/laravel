@@ -26,7 +26,7 @@ class AuthController extends Controller
             && $request->login == $user->name 
             && password_verify($request->password, $user->password)
         ) {
-            return redirect()->route('admin::news::index');
+            return redirect()->route('admin::news::show::all');
         } else {
             return back()->withInput();
         }
