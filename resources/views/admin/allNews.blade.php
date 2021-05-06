@@ -5,7 +5,9 @@
 @section('content')
 
 <p><a href="{{ route('admin::news::create::form') }}">Создать новость</a></p>
+<p><a href="{{ route('admin::news::add') }}">Добавить новости</a></p>
 <p><a href="{{ route('admin::category::show::all') }}">Категории</a></p>
+<p><a href="{{ route('admin::logout') }}">Выйти</a></p>
 <table>
     <tr>
         <th>Заголовок</th>
