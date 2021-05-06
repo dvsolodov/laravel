@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use App\Models\Menu;
 
 class FeedbackController extends Controller
 {
@@ -12,6 +13,7 @@ class FeedbackController extends Controller
         $data = [
             'pageTitle' => 'Обратная связь', 
             'activePage' => 'Обратная связь',
+            'menu' => (new Menu())->get(),
         ];
 
         return view('feedback', $data);

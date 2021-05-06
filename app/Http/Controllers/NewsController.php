@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Menu;
 
 class NewsController extends Controller
 {
@@ -15,6 +16,7 @@ class NewsController extends Controller
             'pageTitle' => "Новости категории \"{$newsFromCategory['cat']}\"", 
             'news' => $newsFromCategory,
             'activePage' => 'Каталог новостей',
+            'menu' => (new Menu())->get(),
         ];
 
         return view('categoryNews', $data);
@@ -27,6 +29,7 @@ class NewsController extends Controller
             'pageTitle' => "Новость из категории \"{$fullNews->category()->first()->name}\"", 
             'fullNews' => $fullNews,
             'activePage' => 'Каталог новостей',
+            'menu' => (new Menu())->get(),
         ];
 
         return view('newsCard', $data);

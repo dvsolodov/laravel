@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsCategoryController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
@@ -31,6 +34,37 @@ Route::get('/category/{category}', [NewsController::class, 'categoryNews'])
 
 Route::get('/category/{category}/news/{news}', [NewsController::class, 'newsCard'])
     ->name('news::card');
+
+Route::group(
+   ['middleware' => 'guest'], 
+    function () {
+        Route::get('/register', [RegisterController::class, 'showRegisterForm'])
+            ->name('register::form');
+
+        Route::post('/register', [RegisterController::class, 'register'])
+            ->name('register');
+
+        Route::get('/login', [LoginController::class, 'showLoginForm'])
+            ->name('login::form');
+
+        Route::post('/login', [LoginController::class, 'login'])
+            ->name('login');
+    }
+);
+
+Route::group(
+   ['middleware' => 'auth'], 
+    function () {
+        Route::get('/logout', [LoginController::class, 'logout'])
+            ->name('logout');
+
+        Route::get('/profile', [ProfileController::class, 'showProfileForm'])
+            ->name('profile::form');
+
+        Route::post('/profile/edit', [ProfileController::class, 'edit'])
+            ->name('profile::edit');
+    }
+);
 
 Route::group(
     [
