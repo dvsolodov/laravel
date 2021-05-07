@@ -16,6 +16,7 @@ class Menu extends Model
         'Обратная связь' => '/feedback',
         'Регистрация' => '/register',
         'Вход' => '/login',
+        'Войти через Mail.ru' => '/auth/vk',
         'Профиль' => '/profile',
         'Выйти' => '/logout',
     ];
@@ -25,7 +26,7 @@ class Menu extends Model
         $userMenu = [];
 
         foreach ($this->menu as $page => $link) {
-            if (Auth::check() && ($link == '/register' || $link == '/login')) {
+            if (Auth::check() && ($link == '/register' || $link == '/login' || $link == '/auth/vk')) {
                 continue;
             }
 

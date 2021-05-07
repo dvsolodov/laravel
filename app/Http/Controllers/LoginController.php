@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Menu;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -41,6 +42,40 @@ class LoginController extends Controller
 
         return back()->with('loginMsg', 'Неправильный логин или пароль');
 
+    }
+
+    public function loginVk()
+    {
+        if (Auth::check()) {
+            return back();
+        }
+
+        return Socialite::with('vkontakte')->redirect();
+    }
+
+    public function responseVk()
+    {
+        $vkUser = Socialite::driver('vkontakte')->user();
+        $user = User::where('id_in_soc', $vkUser->getId())
+            ->where('type_auth', 'vk')
+            ->first();
+
+        if (is_null($user)) {
+            $user = new User();
+            $user->fill([
+                'name' => $vkUser->getName(),
+                'email' => $vkUser->getEmail() ?? '',
+                'password' => \Hash::make($vkUser->getId()),
+                'id_in_soc' => $vkUser->getId(),
+                'type_auth' => 'vk',
+                'avatar' => $vkUser->getAvatar(),
+            ])->save();
+        }
+
+        Auth::login($user);
+
+        return redirect()->route('home');
+        
     }
 
     public function logout(Request $request)

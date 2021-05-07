@@ -6,6 +6,7 @@
 
 <p><a href="{{ route('admin::news::show::all') }}">Новости</a></p>
 <p><a href="{{ route('admin::category::create::form') }}">Создать категорию</a></p>
+<p><a href="{{ route('admin::logout') }}">Выйти</a></p>
 
 <table>
     <tr>

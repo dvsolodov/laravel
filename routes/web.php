@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\ParserController as AdminParserController;
 use App\Http\Controllers\FeedbackController;
 
 /*
@@ -49,6 +50,12 @@ Route::group(
 
         Route::post('/login', [LoginController::class, 'login'])
             ->name('login');
+
+        Route::get('/auth/vk', [LoginController::class, 'loginVk'])
+            ->name('vk::login');
+
+        Route::get('/auth/vk/response', [LoginController::class, 'responseVk'])
+            ->name('vk::response');
     }
 );
 
@@ -92,6 +99,17 @@ Route::group(
         Route::post('/', [AdminAuthController::class, 'auth'])
             ->name('auth');
 
+        Route::get('/logout', [AdminAuthController::class, 'logout'])
+            ->name('logout');
+});
+
+Route::group(
+    [
+        'prefix' => '/admin',
+        'as' => 'admin::',
+        'middleware' => ['auth', 'admin'],
+    ], 
+    function () {
         Route::group(
             [
                 'prefix' => '/news',
@@ -112,6 +130,11 @@ Route::group(
                     ->name('edit');
                 Route::get('/delete/{id}',[AdminNewsController::class, 'delete'])
                     ->name('delete');
+                Route::get('/add', [AdminParserController::class, 'index'])
+                    ->name('add::form');
+                Route::post('/add', [AdminParserController::class, 'store'])
+                    ->name('add');
+
             }
         );
 
@@ -121,7 +144,7 @@ Route::group(
                 'as' => 'category::',
             ],
             function () {
-                Route::get('/', [AdminCategoryController::class, 'showAll'] )
+                Route::get('/', [AdminCategoryController::class, 'showAll'])
                     ->name('show::all');
                 Route::get('/create',[AdminCategoryController::class, 'showCreateForm'])
                     ->name('create::form');
