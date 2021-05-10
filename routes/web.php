@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ParserController as AdminParserController;
+use App\Http\Controllers\Admin\SourceController as AdminSourceController;
 use App\Http\Controllers\FeedbackController;
 
 /*
@@ -130,13 +131,24 @@ Route::group(
                     ->name('edit');
                 Route::get('/delete/{id}',[AdminNewsController::class, 'delete'])
                     ->name('delete');
-                Route::get('/add', [AdminParserController::class, 'index'])
-                    ->name('add::form');
-                Route::post('/add', [AdminParserController::class, 'store'])
-                    ->name('add');
-
             }
         );
+
+        Route::group(
+            [
+                'prefix' => '/source',
+                'as' => 'source::',
+            ],
+            function () {
+                Route::get('/add', [AdminSourceController::class, 'index'])
+                    ->name('add::form');
+                Route::post('/add', [AdminSourceController::class, 'store'])
+                    ->name('add');
+            }
+        );
+
+        Route::get('/parse', [AdminParserController::class, 'parseAll'])
+            ->name('parse::all');
 
         Route::group(
             [

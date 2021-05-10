@@ -24,9 +24,10 @@ class EditNewsRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|min:10|max:50',
-            'description' => 'required|string|min:10|max:100',
-            'text' => 'required|string|min:100|max:2500',
+            'title' => 'required|string|min:10|max:250',
+            'description' => 'required|string|min:10|max:1000',
+            'text' => 'nullable|string|min:100|max:2500',
+            'img' => 'nullable|file|max:100|image|mimes:jpg,png|mimetypes:image/jpeg,image/png',
         ];
     }
 }

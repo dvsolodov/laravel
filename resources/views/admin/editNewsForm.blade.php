@@ -8,7 +8,7 @@
     Назад в панель
 </a>
 
-<form action="{{ route('admin::news::edit', $news->id) }}" method="POST">
+<form action="{{ route('admin::news::edit', $news->id) }}" method="POST" enctype="multipart/form-data">
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -33,6 +33,10 @@
     <p>
         <span>Текст</span>
         <textarea name="text" cols="30" rows="10">{{ $news->text }}</textarea>
+    </p>
+    <p>
+        <span>Картинка</span>
+        <span><input type="file" name="img"></span>
     </p>
     <input type="submit" name="edit" value="Сохранить">
 </form>

@@ -20,7 +20,7 @@ class NewsController extends Controller
     {
         $data = [
             'pageTitle' => 'Панель администратора', 
-            'news' => News::orderBy('category_id')->get(),
+            'news' => News::orderBy('publish_date', 'DESC')->paginate(10),
         ];
 
         return view('admin.allNews', $data); 
@@ -55,6 +55,11 @@ class NewsController extends Controller
         $news->slug = str_replace(' ', '_', $news->title);
         $news->description = $request->description;
         $news->text = $request->text;
+
+        if ($request->hasFile('img')) {
+            $news->img = $request->file('img')->store('images/news', 'public');
+        }
+
         $news->save();
 
         return back()->with('editMsg', 'Новость отредактирована')->withInput();

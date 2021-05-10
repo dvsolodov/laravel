@@ -28,7 +28,8 @@ class RssSourceRequest extends FormRequest
     public function rules()
     {
         return [
-            'rssSource' => 'required|url',
+            'url' => 'required|unique:sources|url',
+            'category_id' => 'required|integer|min:0|',
         ];
     }
 }

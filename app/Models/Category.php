@@ -21,5 +21,10 @@ class Category extends Model
         return $this->hasMany(News::class);
     }
 
+    public function sources()
+    {
+        return $this->hasMany(Source::class);
+    }
+
 }
 
